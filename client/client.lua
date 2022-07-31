@@ -20,8 +20,6 @@ RegisterNetEvent('cw-vehicleswap:client:ChangeVehicle', function(vehName)
     local player = PlayerPedId()
     local vehicle = GetVehiclePedIsIn(player, false)
     local plate = QBCore.Functions.GetPlate(vehicle)
-
-    QBCore.Functions.DeleteVehicle(vehicle)
     TriggerServerEvent('cw-vehicleswap:server:ChangeVehicle', plate, vehName, SwapSpotData.outputGarage, SwapData.price)    
 end)
 
@@ -36,6 +34,9 @@ RegisterNetEvent('cw-vehicleswap:client:NotifyFail', function(vehName)
 end)
 
 RegisterNetEvent('cw-vehicleswap:client:NotifySuccess', function(vehName)
+    local player = PlayerPedId()
+    local vehicle = GetVehiclePedIsIn(player, false)
+    QBCore.Functions.DeleteVehicle(vehicle)
     QBCore.Functions.Notify(Config.Locations[SwapSpotData.location].texts.doneMessage, "success")
     SwapData = {}
 end)
@@ -111,6 +112,7 @@ local function OpenInteraction()
                 })
                 
                 if dialog ~= nil then
+                    print(AvailableSwaps[dialog["swap"]].price)
                     SwapData.type = AvailableSwaps[dialog["swap"]].type
                     SwapData.price = AvailableSwaps[dialog["swap"]].price
                     TriggerEvent('cw-vehicleswap:client:ChangeVehicle', dialog["swap"])

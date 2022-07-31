@@ -25,5 +25,6 @@ RegisterNetEvent('cw-vehicleswap:server:ChangeVehicle', function(plate, vehName,
             TriggerClientEvent('cw-vehicleswap:client:NotifyFail', src)
         end
     else
-            end
+        TriggerClientEvent('cw-vehicleswap:client:NotifyPoor', src)
+    end
 end)

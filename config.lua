@@ -85,7 +85,7 @@ Config.Allowed = {
     },
     ['tornado3'] = {
         ['resto'] = { value = "tornado", title = "Restored Tornado"},
-        ['drag'] = { value = "tornado", title = "Drag Tornado"},
+        ['drag'] = { value = "tornado6", title = "Drag Tornado"},
     },
     ['tornado'] = {
         ['lowrider'] = { value = "tornado5", title = "Lowrider Tornado"},
