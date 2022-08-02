@@ -9,6 +9,7 @@ Config.Types = {
     ['drift'] = { price = 10000 },
     ['raised'] = { price = 12000 },
     ['widebody'] = { price = 20000 },
+    ['special'] = { price = 10000 },
 }
 
 Config.Locations = {
@@ -25,6 +26,7 @@ Config.Locations = {
             ['drift'] = Config.Types.drift,
             ['raised'] = Config.Types.raised,
             ['widebody'] = Config.Types.widebody,
+            ['special'] = Config.Types.special,
         },
         texts = { shopTitle = 'Demo Spot - we do EVERYTHING', doneMessage = "Check your ride out at the Dumbo Garage on the other side of this rock pile" }
     },
@@ -107,5 +109,16 @@ Config.Allowed = {
     },
     ['caddy2'] = {
         ['resto'] = { value = "caddy", title = "Fancy Caddy"},
+    },
+}
+
+Config.SwapItem = 'swap_slip'
+
+Config.Special = {
+    ['sultan'] = {
+        ['special'] = { value = "sultanrs", title = "Sultan RS", swapslip="sultanrs" },
+    },
+    ['stratum'] = {
+        ['special'] = { value = "stratumc", title = "Stratum Custom", swapslip="elegy"},
     },
 }
