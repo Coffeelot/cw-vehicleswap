@@ -75,8 +75,19 @@ QBCore.Functions.CreateCallback('cw-vehicleswap:server:CheckIfPlayerHasSpecialSl
     local specials = {}
     if swapSlips then
         for _, item in ipairs(swapSlips) do
-            specials[item.info.vehicle] = item.info.vehicle 
+            local vehicle = QBCore.Shared.Vehicles[item.info.vehicle]
+            if vehicle == nil then
+                print(item.info.vehicle.. ' does not exist in vehicles.lua')
+            end
+            if vehicle then
+                specials[item.info.vehicle] = item.info.vehicle 
+            end
         end
     end
     cb(specials)
 end)
+
+QBCore.Commands.Add('checkForItems', 'heuhe', {}, true, function(source, args)
+    local car = "sultanrs"
+    TriggerEvent('cw-vehicleswap:server:TakeSlip', source, 'car')
+end, "admin")

@@ -55,18 +55,18 @@ end
 local function createInputEntries(vehicleSwaps, customSwaps)
     local inputs = {}
     local from = SwapData.from
-    local specials = {}
+    local specials = nil
 
     -- Normal swaps
 	for i, swap in pairs(vehicleSwaps) do
-        local spotHasType = SwapSpotData.types[i]
-        local price = Config.Types[i].price
+        local spotHasType = SwapSpotData.types[swap.type]
+        local price = Config.Types[swap.type].price
         if Config.Allowed[SwapData.from] then
             if Config.Allowed[SwapData.from][i].price then
                 price = Config.Allowed[SwapData.from][i].price
             end
             if spotHasType ~= nil then
-                AvailableSwaps[swap.value] = { to = swap.value, type = i, price = price}
+                AvailableSwaps[swap.value] = { to = swap.value, type = swap.type, price = price}
                 table.insert(inputs, {value=swap.value, text=swap.title.." $"..price})
             end
         end
@@ -74,21 +74,23 @@ local function createInputEntries(vehicleSwaps, customSwaps)
 
     -- Special swaps
     for i, swap in pairs(customSwaps) do
-        local spotHasType = SwapSpotData.types[i]
-        local price = Config.Types[i].price
-        if Config.Special[SwapData.from] then
-            if Config.Special[SwapData.from][i].price then
-                price = Config.Allowed[SwapData.from][i].price
-            end
-            if SwapSpotData.types['special'] ~= nil then
+        if SwapSpotData.types['special'] ~= nil then
+            local spotHasType = SwapSpotData.types[swap.type]
+            local price = Config.Types[swap.type].price
+            if Config.Special[SwapData.from] then
+                if Config.Special[SwapData.from][i].price then
+                    price = Config.Allowed[SwapData.from][i].price
+                end
                 QBCore.Functions.TriggerCallback('cw-vehicleswap:server:CheckIfPlayerHasSpecialSlips', function(result, from)
                     specials = result
                 end)
-            end
-            Wait(500)
-            if spotHasType ~= nil and specials[swap.swapslip] ~= nil then
-                AvailableSwaps[swap.value] = { to = swap.value, type = i, price = price}
-                table.insert(inputs, {value=swap.value, text=swap.title.." $"..price})
+                while specials == nil do -- make sure that specials is loaded
+                    Wait(200)
+                end
+                if spotHasType ~= nil and specials[swap.swapslip] ~= nil and specials ~= nil then
+                    AvailableSwaps[swap.value] = { to = swap.value, type = swap.type, price = price}
+                    table.insert(inputs, {value=swap.value, text=swap.title.." $"..price})
+                end
             end
         end
 	end
@@ -154,6 +156,8 @@ local function OpenInteraction()
                     SwapData.type = AvailableSwaps[dialog["swap"]].type
                     SwapData.price = AvailableSwaps[dialog["swap"]].price
                     SwapData.to = dialog["swap"]
+                    -- print('type', SwapData.type)
+                    -- print('price', SwapData.price)
                     TriggerEvent('cw-vehicleswap:client:ChangeVehicle', dialog["swap"])
                 else
                     QBCore.Functions.Notify("Do your job better!", "error")
