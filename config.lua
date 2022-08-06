@@ -9,11 +9,11 @@ Config.Types = {
     ["drift"] = {price = 10000},
     ["raised"] = {price = 12000},
     ["widebody"] = {price = 20000},
-    ["special"] = {price = 10000}
+    ["special"] = {price = 5000}
 }
 
 Config.Locations = {
-    ["allmods"] = {
+    ["allmods"] = { -- this one does everything
         name = "allmods",
         title = "All Mods",
         coords = vector4(166.57, -3259.58, 5.19, 92.46),
@@ -33,7 +33,7 @@ Config.Locations = {
             doneMessage = "Check your ride out at the Dumbo Garage on the other side of this rock pile"
         }
     },
-    ["sandy"] = {
+    ["sandy"] = { -- example of a shop that only does certain types, and where user needs to be mechanic
         name = "sandy",
         title = "Sandy Restoration, Drag and Off Roading",
         coords = vector4(917.73, 3566.19, 32.95, 102.06),
@@ -48,7 +48,35 @@ Config.Locations = {
             shopTitle = "Sandy SDOR",
             doneMessage = "Check your ride out at the Liqour Parking on the other side of the road"
         }
-    }
+    },
+    ["bennys"] = { -- example of a shop that only does certain types, where user needs to be mechanic and where garage is left unset
+        name = "bennys",
+        title = "Get Low With Bennys",
+        coords = vector4(-202.93, -1297.63, 31.3, 179.34),
+        job = "mechanic",
+        types = {
+            ["resto"] = Config.Types.resto,
+            ["lowrider"] = Config.Types.lowrider,
+            ["donk"] = Config.Types.donk
+        },
+        texts = {
+            shopTitle = "Get Low With Bennys",
+            doneMessage = "Check your ride out at the San Andreas Parking garage"
+        }
+    },
+    ["hectors"] = { -- example of a shop that only does certain types, where user needs to be mechanic and where garage is left unset
+        name = "hectors",
+        title = "Hectors Legit Spot",
+        garage = "haanparking",
+        coords = vector4(-201.45, 6263.08, 31.49, 34.04),
+        types = {
+            ["special"] = Config.Types.special
+        },
+        texts = {
+            shopTitle = "No refunds.",
+            doneMessage = "Check your ride out at the Bell Farms Parking on the other side of the road."
+        }
+    },
 }
 
 Config.Allowed = {
@@ -123,7 +151,9 @@ Config.SwapItem = "swap_slip"
 Config.Special = {
     ["sultan"] = {
         {type = "special", value = "sultanrs", title = "Sultan RS", swapslip = "sultanrs"},
-        {type = "special", value = "mega", title = "MEGA", swapslip = "mega"}
+    },
+    ["banshee"] = {
+        {type = "special", value = "banshee2", title = "Widebody Banshee ", swapslip = "banshee"},
     },
     ["stratum"] = {
         {type = "special", value = "stratumc", title = "Stratum Custom", swapslip = "elegy"} -- stratum custom

@@ -113,8 +113,8 @@ end
 
 
 local function OpenInteraction()
-    exports['qb-core']:HideText()
     if isAllowed() then
+        exports['qb-core']:HideText()
         local player = PlayerPedId()
         local vehicle = GetVehiclePedIsIn(player, false)
         local props = QBCore.Functions.GetVehicleProperties(vehicle)
@@ -194,12 +194,11 @@ end
 
 -- Location Creation
 CreateThread(function()
-    local PlayerData = QBCore.Functions.GetPlayerData()
     for i, data in pairs(Config.Locations) do
         local text = data.title
         -- PolyZone + Drawtext + Locations Management
         local _name = data.name.."-swap-spot"
-        local newSpot = BoxZone:Create(data.coords, 10, 10, {
+        local newSpot = BoxZone:Create(data.coords, 5, 5, {
             name = _name,
             -- debugPoly = true,
             heading = data.coords.w,
@@ -208,16 +207,26 @@ CreateThread(function()
         })
         newSpot:onPlayerInOut(function(isPointInside, _)
             if isPointInside then
-                SwapSpotData = {
-                    ['location'] = i,
-                    ['spot'] = _name,
-                    ['coords'] = vector3(data.coords.x, data.coords.y, data.coords.z),
-                    ['outputGarage'] = data.garage,
-                    ['heading'] = data.coords.w,
-                    ['drawtextui'] = "Enter Swap Spot",
-                    ['types'] = data.types,
-                }
-                SetupInteraction()
+                local PlayerData = QBCore.Functions.GetPlayerData()
+                if (data.job and PlayerData.job.name == data.job) or data.job == nil then
+                    if GetVehiclePedIsIn(PlayerPedId()) ~= 0 then
+                        local garage = 'sapcounsel'
+                        if data.garage then
+                            garage = data.garage
+                        end
+                        
+                        SwapSpotData = {
+                            ['location'] = i,
+                            ['spot'] = _name,
+                            ['coords'] = vector3(data.coords.x, data.coords.y, data.coords.z),
+                            ['outputGarage'] = garage,
+                            ['heading'] = data.coords.w,
+                            ['drawtextui'] = "Enter Swap Spot",
+                            ['types'] = data.types,
+                        }
+                        SetupInteraction()
+                    end
+                end
             elseif SwapSpotData['location'] == i then
                 SwapSpotData = {}
                 exports['qb-core']:HideText()
