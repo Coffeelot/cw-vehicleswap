@@ -6,7 +6,7 @@
 Script that maps vehicles and does vehicle swaps (like make a Peyote into a Peyote Gasser/Custom).
 The script is QB-core based, and makes use of QB-input.
 
-The script is more of a template than a full plug and play thing. It comes with 4 swap spots. One is at Bennys, that only does lowriders, donks and restorations, the second is up in sandy, and only does drag cars, lifted cars and restorations. Both these are set to require the player to be a mechanic to use. The third spot is a demo spot (MAKE SURE TO REMOVE THIS!) that has ALL the types. The last spot is a special spot, related to [cw-boostjob](https://github.com/Coffeelot/cw-boostjob), up in Paleto that only does special jobs.
+The script is more of a template than a full plug and play thing. It comes with 4 swap spots. One is at Bennys, that only does lowriders, donks and restorations, the second is up in sandy, and only does drag cars, lifted cars and restorations. Both these are set to require the player to be a mechanic to use. The third spot is a demo spot (MAKE SURE TO REMOVE THIS!) that has ALL the types. The last spot is a special spot, related to [cw-boostjob](https://github.com/Coffeelot/cw-boostjob), up in Paleto that only does special jobs. You need to legally own the car you are trying to swap... but some swaps might be a little bit more shady than others.
 
 # Developed by Coffeelot and Wuggie 
 [More scripts by us](https://github.com/stars/Coffeelot/lists/cw-scripts)  👈\
