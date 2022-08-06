@@ -8,11 +8,11 @@ The script is QB-core based, and makes use of QB-input.
 
 The script is more of a template than a full plug and play thing. It comes with 4 swap spots. One is at Bennys, that only does lowriders, donks and restorations, the second is up in sandy, and only does drag cars, lifted cars and restorations. Both these are set to require the player to be a mechanic to use. The third spot is a demo spot (MAKE SURE TO REMOVE THIS!) that has ALL the types. The last spot is a special spot, related to [cw-boostjob](https://github.com/Coffeelot/cw-boostjob), up in Paleto that only does special jobs.
 
-# Developed by Coffeelot and Wuggie
+# Developed by Coffeelot and Wuggie 
 [More scripts by us](https://github.com/stars/Coffeelot/lists/cw-scripts)  👈\
 [Support, updates and script previews](https://discord.gg/FJY4mtjaKr) 👈
 
-# Preview 
+# Preview 📽
 
 [![YOUTUBE VIDEO](http://img.youtube.com/vi/_EEqkvRC6RM/0.jpg)](https://youtu.be/_EEqkvRC6RM)
 
