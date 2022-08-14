@@ -139,7 +139,7 @@ local function OpenInteraction()
             else
                 local dialog = exports['qb-input']:ShowInput({
                     header = Config.Locations[SwapSpotData.location].texts.shopTitle,
-                    submitText = "SUBMIT TEXT",
+                    submitText = "Confirm Swap",
                     inputs = {
                         {
                             text = "Type", -- text you want to be displayed as a place holder

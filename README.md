@@ -2,7 +2,6 @@
 
 ![Really cool image](https://i.imgur.com/wZITWF8.png)
 
-
 Script that maps vehicles and does vehicle swaps (like make a Peyote into a Peyote Gasser/Custom).
 The script is QB-core based, and makes use of QB-input.
 
