@@ -152,6 +152,18 @@ Config.Special = {
     ["sultan"] = {
         {type = "special", value = "sultanrs", title = "Sultan RS", swapslip = "sultanrs"},
     },
+    ["brioso2"] = {
+        {type = "special", value = "brioso3", title = "Brioso Classic Widebody", swapslip = "brioso3"},
+    },
+    ["sentinel3"] = {
+        {type = "special", value = "sentinel4", title = "Sentinel Classic Widebody", swapslip = "sentinel4"},
+    },
+    ["tenf"] = {
+        {type = "special", value = "tenf2", title = "10F Widebody", swapslip = "tenf2"},
+    },
+    ["weevil"] = {
+        {type = "special", value = "weevil2", title = "Weevil Widebody", swapslip = "weevil2"},
+    },
     ["banshee"] = {
         {type = "special", value = "banshee2", title = "Widebody Banshee ", swapslip = "banshee"},
     },
