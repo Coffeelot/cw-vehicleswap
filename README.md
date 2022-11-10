@@ -16,6 +16,10 @@ The script is more of a template than a full plug and play thing. It comes with 
 **Support, updates and script previews**:
 
 [![Join The discord!](https://cdn.discordapp.com/attachments/977876510620909579/1013102122985857064/discordJoin.png)](https://discord.gg/FJY4mtjaKr )
+
+**All our scripts are and will remain free**. If you want to support what we do, you can buy us a coffee here:
+
+[![Buy Us a Coffee](https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-2.svg)](https://www.buymeacoffee.com/cwscriptbois )
 # Preview 📽
 
 [![YOUTUBE VIDEO](http://img.youtube.com/vi/_EEqkvRC6RM/0.jpg)](https://youtu.be/_EEqkvRC6RM)
