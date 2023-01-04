@@ -83,14 +83,13 @@ local function createInputEntries(vehicleSwaps, customSwaps)
                 end
                 QBCore.Functions.TriggerCallback('cw-vehicleswap:server:CheckIfPlayerHasSpecialSlips', function(result, from)
                     specials = result
+                    print(dump(specials))
+                    if spotHasType ~= nil and specials[swap.swapslip] ~= nil and specials ~= nil then
+                        AvailableSwaps[swap.value] = { to = swap.value, type = swap.type, price = price}
+                        table.insert(inputs, {value=swap.value, text=swap.title.." $"..price})
+                        print('inputs', dump(inputs))
+                    end
                 end)
-                while specials == nil do -- make sure that specials is loaded
-                    Wait(200)
-                end
-                if spotHasType ~= nil and specials[swap.swapslip] ~= nil and specials ~= nil then
-                    AvailableSwaps[swap.value] = { to = swap.value, type = swap.type, price = price}
-                    table.insert(inputs, {value=swap.value, text=swap.title.." $"..price})
-                end
             end
         end
 	end
@@ -134,6 +133,7 @@ local function OpenInteraction()
                 customSwaps = {}
             end
             local inputs = createInputEntries(vehicleSwaps, customSwaps)
+            Wait(500)
             if #inputs == 0 then
                 QBCore.Functions.Notify("This spot doesn't do this type of car", "error")
             else
