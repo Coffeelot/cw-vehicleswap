@@ -136,13 +136,13 @@ QBCore.Commands.Add('checkForItems', 'heuhe', {}, true, function(source, args)
     TriggerEvent('cw-vehicleswap:server:TakeSlip', source, 'car')
 end, "admin")
 
-QBCore.Commands.Add('createswapslip', 'give item with info. (Admin Only)',{ { name = 'vehicle', help = 'what vehicle is it for' }}, true, function(source, args)
-    local src = source
-	local Player = QBCore.Functions.GetPlayer(src)
-    local item = 'swap_slip'
-    local info = {}
-    info.vehicle = args[1]
+-- QBCore.Commands.Add('createswapslip', 'give item with info. (Admin Only)',{ { name = 'vehicle', help = 'what vehicle is it for' }}, true, function(source, args)
+--     local src = source
+-- 	local Player = QBCore.Functions.GetPlayer(src)
+--     local item = 'swap_slip'
+--     local info = {}
+--     info.vehicle = args[1]
 
-    Player.Functions.AddItem(item, 1, nil, info)
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item], "add")
-end, 'admin')
+--     Player.Functions.AddItem(item, 1, nil, info)
+--     TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item], "add")
+-- end, 'admin')
