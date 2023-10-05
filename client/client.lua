@@ -20,7 +20,7 @@ RegisterNetEvent('cw-vehicleswap:client:ChangeVehicle', function(vehName)
     local player = PlayerPedId()
     local vehicle = GetVehiclePedIsIn(player, false)
     local plate = QBCore.Functions.GetPlate(vehicle)
-    TriggerServerEvent('cw-vehicleswap:server:ChangeVehicle', plate, vehName, SwapSpotData.outputGarage, SwapData.price)    
+    TriggerServerEvent('cw-vehicleswap:server:ChangeVehicle', plate, vehName, SwapSpotData.outputGarage, SwapData.price)
 end)
 
 RegisterNetEvent('cw-vehicleswap:client:NotifyPoor', function(vehName)
@@ -36,7 +36,11 @@ end)
 RegisterNetEvent('cw-vehicleswap:client:NotifySuccess', function(vehName)
     local player = PlayerPedId()
     local vehicle = GetVehiclePedIsIn(player, false)
-    QBCore.Functions.DeleteVehicle(vehicle)
+    if Config.AdvancedParking then
+        exports["AdvancedParking"]:DeleteVehicle(vehicle)
+    else
+        QBCore.Functions.DeleteVehicle(vehicle)
+    end
     QBCore.Functions.Notify(Config.Locations[SwapSpotData.location].texts.doneMessage, "success")
     if SwapData.type == 'special' then
         TriggerServerEvent('cw-vehicleswap:server:TakeSlip', SwapData.to)
@@ -118,7 +122,7 @@ local function OpenInteraction()
         local vehicle = GetVehiclePedIsIn(player, false)
         local props = QBCore.Functions.GetVehicleProperties(vehicle)
         local hash = props.model
-        local vehname = getVehicleFromVehList(hash) 
+        local vehname = getVehicleFromVehList(hash)
         SwapData.from = vehname
 
         local vehicleSwaps = Config.Allowed[vehname]
@@ -150,7 +154,6 @@ local function OpenInteraction()
                         },
                     },
                 })
-                
                 if dialog ~= nil then
                     exports['qb-core']:HideText()
                     SwapData.type = AvailableSwaps[dialog["swap"]].type
@@ -200,7 +203,7 @@ CreateThread(function()
         local _name = data.name.."-swap-spot"
         local newSpot = BoxZone:Create(data.coords, 5, 5, {
             name = _name,
-            -- debugPoly = true,
+            -- debugPoly = false,
             heading = data.coords.w,
             minZ = data.coords.z - 3.0,
             maxZ = data.coords.z + 3.0,
@@ -214,7 +217,6 @@ CreateThread(function()
                         if data.garage then
                             garage = data.garage
                         end
-                        
                         SwapSpotData = {
                             ['location'] = i,
                             ['spot'] = _name,
@@ -234,3 +236,23 @@ CreateThread(function()
         end)
     end
 end)
+
+local function getAmountOfSwaps(model)
+    if Config.Allowed[model] then
+        return #Config.Allowed[model]
+    else
+        return 0
+    end
+end exports('getAmountOfSwaps', getAmountOfSwaps)
+
+local function listSwaps()
+    print('=========================================')
+    for i,v in pairs(Config.Allowed) do
+        if QBCore.Shared.Vehicles[i] then
+            for index, swap in pairs(v) do
+                print(QBCore.Shared.Vehicles[i].name..' -> '.. swap.title, '$'..swap.price)
+            end
+        end
+    end
+    print('=========================================')
+end exports('listSwaps', listSwaps)

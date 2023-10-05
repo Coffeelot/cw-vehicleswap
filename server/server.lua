@@ -24,9 +24,7 @@ RegisterNetEvent('cw-vehicleswap:server:ChangeVehicle', function(plate, vehName,
         if outputGarage ~= nil then
             garage = outputGarage
         end
-    
         local result = MySQL.query.await('SELECT plate FROM player_vehicles WHERE plate = ?', { plate })
-    
         -- This wont work with cars like stratum -> Elegy retro or whatever
         if result[1] ~= nil then
             Player.Functions.RemoveMoney("bank", price , "Vehicle Modification")
@@ -124,7 +122,7 @@ QBCore.Functions.CreateCallback('cw-vehicleswap:server:CheckIfPlayerHasSpecialSl
             if vehicle == nil then
                 print(vehicleName.. ' does not exist in vehicles.lua')
             else
-                specials[vehicleName] = vehicleName 
+                specials[vehicleName] = vehicleName
             end
         end
     end
@@ -136,13 +134,13 @@ QBCore.Commands.Add('checkForItems', 'heuhe', {}, true, function(source, args)
     TriggerEvent('cw-vehicleswap:server:TakeSlip', source, 'car')
 end, "admin")
 
--- QBCore.Commands.Add('createswapslip', 'give item with info. (Admin Only)',{ { name = 'vehicle', help = 'what vehicle is it for' }}, true, function(source, args)
---     local src = source
--- 	local Player = QBCore.Functions.GetPlayer(src)
---     local item = 'swap_slip'
---     local info = {}
---     info.vehicle = args[1]
+QBCore.Commands.Add('createswapslip', 'give item with info. (Admin Only)',{ { name = 'vehicle', help = 'what vehicle is it for' }}, true, function(source, args)
+    local src = source
+	local Player = QBCore.Functions.GetPlayer(src)
+    local item = 'swap_slip'
+    local info = {}
+    info.vehicle = args[1]
 
---     Player.Functions.AddItem(item, 1, nil, info)
---     TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item], "add")
--- end, 'admin')
+    Player.Functions.AddItem(item, 1, nil, info)
+    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item], "add")
+end, 'admin')
