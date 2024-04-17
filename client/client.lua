@@ -36,7 +36,7 @@ end)
 RegisterNetEvent('cw-vehicleswap:client:NotifySuccess', function(vehName)
     local player = PlayerPedId()
     local vehicle = GetVehiclePedIsIn(player, false)
-    if Config.AdvancedParking then
+    if Config.Persistent then
         exports["AdvancedParking"]:DeleteVehicle(vehicle)
     else
         QBCore.Functions.DeleteVehicle(vehicle)
@@ -56,49 +56,46 @@ local function getVehicleFromVehList(hash)
 	end
 end
 
-local function createInputEntries(vehicleSwaps, customSwaps)
+local function createInputEntries(vehicleSwaps, customSwaps, cb)
     local inputs = {}
     local from = SwapData.from
     local specials = nil
-
+    
     -- Normal swaps
-	for i, swap in pairs(vehicleSwaps) do
-        local spotHasType = SwapSpotData.types[swap.type]
-        local price = Config.Types[swap.type].price
-        if Config.Allowed[SwapData.from] then
-            if Config.Allowed[SwapData.from][i].price then
-                price = Config.Allowed[SwapData.from][i].price
-            end
-            if spotHasType ~= nil then
-                AvailableSwaps[swap.value] = { to = swap.value, type = swap.type, price = price}
-                table.insert(inputs, {value=swap.value, text=swap.title.." $"..price})
-            end
-        end
-	end
-
-    -- Special swaps
-    for i, swap in pairs(customSwaps) do
-        if SwapSpotData.types['special'] ~= nil then
+    QBCore.Functions.TriggerCallback('cw-vehicleswap:server:CheckIfPlayerHasSpecialSlips', function(result, from)
+        for i, swap in pairs(vehicleSwaps) do
             local spotHasType = SwapSpotData.types[swap.type]
             local price = Config.Types[swap.type].price
-            if Config.Special[SwapData.from] then
-                if Config.Special[SwapData.from][i].price then
+            if Config.Allowed[SwapData.from] then
+                if Config.Allowed[SwapData.from][i].price then
                     price = Config.Allowed[SwapData.from][i].price
                 end
-                QBCore.Functions.TriggerCallback('cw-vehicleswap:server:CheckIfPlayerHasSpecialSlips', function(result, from)
+                if spotHasType ~= nil then
+                    AvailableSwaps[swap.value] = { to = swap.value, type = swap.type, price = price}
+                    table.insert(inputs, {value=swap.value, text=swap.title.." $"..price})
+                end
+            end
+        end
+
+        -- Special swaps
+        for i, swap in pairs(customSwaps) do
+            if SwapSpotData.types['special'] ~= nil then
+                local spotHasType = SwapSpotData.types[swap.type]
+                local price = Config.Types[swap.type].price
+                if Config.Special[SwapData.from] then
+                    if Config.Special[SwapData.from][i].price then
+                        price = Config.Allowed[SwapData.from][i].price
+                    end
                     specials = result
-                    print(dump(specials))
                     if spotHasType ~= nil and specials[swap.swapslip] ~= nil and specials ~= nil then
                         AvailableSwaps[swap.value] = { to = swap.value, type = swap.type, price = price}
                         table.insert(inputs, {value=swap.value, text=swap.title.." $"..price})
-                        print('inputs', dump(inputs))
                     end
-                end)
+                end
             end
         end
-	end
-
-    return inputs
+        cb(inputs)
+    end)
 end
 
 local function isAllowed()
@@ -136,36 +133,37 @@ local function OpenInteraction()
             if customSwaps == nil then
                 customSwaps = {}
             end
-            local inputs = createInputEntries(vehicleSwaps, customSwaps)
-            Wait(500)
-            if #inputs == 0 then
-                QBCore.Functions.Notify("This spot doesn't do this type of car", "error")
-            else
-                local dialog = exports['qb-input']:ShowInput({
-                    header = Config.Locations[SwapSpotData.location].texts.shopTitle,
-                    submitText = "Confirm Swap",
-                    inputs = {
-                        {
-                            text = "Type", -- text you want to be displayed as a place holder
-                            name = "swap", -- name of the input should be unique otherwise it might override
-                            type = "select", -- type of the input - number will not allow non-number characters in the field so only accepts 0-9
-                            options = inputs,
-                            isRequired = true, -- Optional [accepted values: true | false] but will submit the form if no value is inputted
-                        },
-                    },
-                })
-                if dialog ~= nil then
-                    exports['qb-core']:HideText()
-                    SwapData.type = AvailableSwaps[dialog["swap"]].type
-                    SwapData.price = AvailableSwaps[dialog["swap"]].price
-                    SwapData.to = dialog["swap"]
-                    -- print('type', SwapData.type)
-                    -- print('price', SwapData.price)
-                    TriggerEvent('cw-vehicleswap:client:ChangeVehicle', dialog["swap"])
+            createInputEntries(vehicleSwaps, customSwaps, function(inputs)
+                if #inputs == 0 then
+                    QBCore.Functions.Notify("This spot doesn't do this type of car", "error")
                 else
-                    QBCore.Functions.Notify("Do your job better!", "error")
+                    local dialog = exports['qb-input']:ShowInput({
+                        header = Config.Locations[SwapSpotData.location].texts.shopTitle,
+                        submitText = "Confirm Swap",
+                        inputs = {
+                            {
+                                text = "Type", -- text you want to be displayed as a place holder
+                                name = "swap", -- name of the input should be unique otherwise it might override
+                                type = "select", -- type of the input - number will not allow non-number characters in the field so only accepts 0-9
+                                options = inputs,
+                                isRequired = true, -- Optional [accepted values: true | false] but will submit the form if no value is inputted
+                            },
+                        },
+                    })
+    
+                    if dialog ~= nil then
+                        exports['qb-core']:HideText()
+                        SwapData.type = AvailableSwaps[dialog["swap"]].type
+                        SwapData.price = AvailableSwaps[dialog["swap"]].price
+                        SwapData.to = dialog["swap"]
+                        -- print('type', SwapData.type)
+                        -- print('price', SwapData.price)
+                        TriggerEvent('cw-vehicleswap:client:ChangeVehicle', dialog["swap"])
+                    else
+                        QBCore.Functions.Notify("Do your job better!", "error")
+                    end
                 end
-            end
+            end)
         end
     else
         QBCore.Functions.Notify("It looks like you don't work here pal", "error")
@@ -217,6 +215,7 @@ CreateThread(function()
                         if data.garage then
                             garage = data.garage
                         end
+
                         SwapSpotData = {
                             ['location'] = i,
                             ['spot'] = _name,

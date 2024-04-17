@@ -1,4 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject()
+local useDebug = Config.Debug
 
 function dump(o)
     if type(o) == 'table' then
