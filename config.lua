@@ -172,7 +172,7 @@ Config.Allowed = {
     },
     ["banshee"] = {
         {type = "widebody", value = "banshee2", title = "Widebody Banshee", price = 60000 },
-        {type = "widebody", value = "bansheeas", title = "Widebody Banshee", price = 70000 }
+        {type = "widebody", value = "bansheeas", title = "Alien Styling Banshee", price = 70000 }
     },
     ["minivan"] = {
         {type = "lowrider", value = "minivan2", title = "Lowrider Minivan", price = Config.Types.lowrider.price }
@@ -292,7 +292,7 @@ Config.Special = {
         {type = "special", value = "sultanrsv8", title = "Sultan RS V8", swapslip = "sultanrsv8"},
     },
     ["banshee"] = {
-        {type = "special", value = "banshee2", title = "Widebody Banshee ", swapslip = "banshee"},
+        {type = "special", value = "banshee2", title = "Widebody Banshee ", swapslip = "banshee2"},
     },
     ["stratum"] = {
         {type = "special", value = "stratumc", title = "Stratum Custom", swapslip = "elegy"} -- stratum custom
